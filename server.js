@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const ejs = require("ejs");
-//const coinHandler = require("./handlers/coinHandler");
+const coinHandler = require("./handlers/coinHandler");
 const coinsModel = require("./models/coins");
 
 async function findCoins() {
@@ -54,20 +54,17 @@ db.mongoose.connect(dbURI, {
         process.exit();
     });
 
-app.get('/', async (req, res) => {
-    res.render("table")
-})
 
-/*app.get('/', async (req, res) => {
-    console.log("meupauberimbaU");
+app.get('/', async (req, res) => {
     // res.sendFile(path.join(__dirname, '/public/index.html'));
     const data = await findCoins();
-    ejs.renderFile("/public/index", {coinsList:data}, {}, function(err, str){
+    res.render("index", function (err, str) {
+        async = true
         console.log(err)
-    res.send(str);
+        res.send(str);
 
     });
-})*/
+})
 
 app.get('/about', (req, res) => {
     res.render("about")
@@ -77,13 +74,6 @@ app.get('/login', (req, res) => {
     res.render("login")
 });
 
-app.get('/', (req, res) => {
-    Coins.find({}, function(err, coins) {
-        res.render('index', {
-            coisList: coins
-        })
-    })
-})
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
