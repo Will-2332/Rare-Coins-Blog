@@ -56,7 +56,6 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>
-                    <>
                     <h1>Ask away!</h1>
                     <form action="search">
                         <p><label for="yearc">Year of the coin?</label><br></p>
@@ -78,25 +77,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% coinsList.forEach(coins=> async {%>
+                            <tr>
                                 <tr>
-                                <tr>
-                                    <th scope="row">
-                                        <%= coins._id </th>%>
-                                    <td>
-                                        <%= coins.Year %>
-                                    </td>%>
-                                    <td>
-                                        <%= coins.Denomination </td>%>
-                                    <td>
-                                        <%= <img src="coins.Pic">
-                                    </td>%>
-                                    <td>
-                                        <%= coins.History</td>%>
-                                    <td>
-                                        <%= coins.Value</td>%>
-                                </tr>
-                                <%})%>
+                                  <th scope="row">
+                                    <%= movie._id %>
+                                  </th>
+                                  <td>
+                                    <%= coins.Year %>
+                                  </td>
+                                  <td>
+                                    <%= coins.Denomination %>
+                                  </td>
+                                  <td>
+                                    <%= <img src="coins.Pic" %>
+                                  </td>
+                                  <td>
+                                    <%= coins.History %>
+                                  </td>
+                                  <td>
+                                    <%= coins.Value %>
+                                  </td>
+                                  <%)}%>
                         </tbody>
                     </table>
                 </div>
