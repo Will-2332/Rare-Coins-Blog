@@ -2,6 +2,7 @@ const express = require("express");
 const coinsModel = require("../models/coins");
 const app = express();
 
+function FindDB () {}
 app.get("/coins", async (request, response) => {
   const coins = await coinsModel.find({});
 
