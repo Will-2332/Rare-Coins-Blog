@@ -50,7 +50,7 @@ db.mongoose.connect(dbURI, {
 
 app.get('/', async (req, res) => {
     // res.sendFile(path.join(__dirname, '/public/index.html'));
-    const data = await findCoins();
+    const data = await coinHandler.findCoins();
     console.log(data)
     ejs.renderFile('./public/table.ejs', {coins:data}, {}, function (err, str) {
         console.log(err);
