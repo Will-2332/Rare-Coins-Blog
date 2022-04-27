@@ -44,7 +44,7 @@ app.get('/api/coins/:id', (req, res) => {
 
 
 */
-exports = {
+module.exports = {
   findCoins: async function () {
     const coins = await coinsModel.find({});
     return coins
