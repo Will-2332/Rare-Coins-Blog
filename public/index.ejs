@@ -64,51 +64,47 @@
                         <input type="number" id="yearc" name="yearc"><br>
                         <p><label for="denomc">Denomination of the coin?</label><br></p>
                         <input type="number" id="denomc" name="denomc">
-                        <p><input type="submit" value="Search" onclick="search(yearc,denomc)"></p>
                     </form>
-                    <p><button>Delete</button> <button onclick="save">Save</button></p>
-                    <p id="demo"></p>
                     </p>
-                    </table>
                 </div>
-                <table class="table table-striped table-primary">
+                <table class="table table-striped table-primary" id="coinTable" border="1" > 
                     <thead>
-                      <tr>
-                        <th>Year</th>
-                        <th>Denomination</th>
-                        <th>Pic</th>
-                        <th>History</th>
-                        <th>Value</th>
-                      </tr>
+                        <tr>
+                            <th>Year</th>
+                            <th>Denomination</th>
+                            <th>Pic</th>
+                            <th>History</th>
+                            <th>Value</th>
+                        </tr>
                     </thead>
                     <tbody>
-                      <%if (coins.length>0){ %>
-                        <% coins.forEach(function(row){ %>
-                          <tr>
-                            <td>
-                              <%= row.Year %>
-                            </td>
-                            <td>
-                              <%= row.Denomination %>
-                            </td>
-                            <td>
-                              <img src ="<%= row.Pic%>"alt="Coin" width="250" height="300">
-                            </td>
-                            <td>
-                              <%= row.History %>
-                            </td>
-                            <td>
-                              <%= row.Value %>
-                            </td>
-                          </tr>
-                          <% })}else{ %>
-                            <tr>
-                              <td colspan="6">No Record Found</td>
-                  
-                            </tr>
-                            <% } %>
+                        <%if (coins.length>0){ %>
+                            <% coins.forEach(function(row){ %>
+                                <tr>
+                                    <td>
+                                        <%= row.Year %>
+                                    </td>
+                                    <td>
+                                        <%= row.Denomination %>
+                                    </td>
+                                    <td>
+                                        <img src="<%= row.Pic%>" alt="Coin" width="250" height="300">
+                                    </td>
+                                    <td>
+                                        <%= row.History %>
+                                    </td>
+                                    <td>
+                                        <%= row.Value %>
+                                    </td>
+                                </tr>
+                                <% })}else{ %>
+                                    <tr>
+                                        <td colspan="6">No Record Found</td>
+
+                                    </tr>
+                                    <% } %>
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     </article>
