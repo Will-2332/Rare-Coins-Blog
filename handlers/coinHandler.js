@@ -1,9 +1,6 @@
 const coinsModel = require("../models/coins");
 
-async function findCoins() {
-  const coins = await coinsModel.find({});
-  return coins
-};
+
 
 /*app.post("/api/coins", async (request, response) => {
   const coins = new coinsModel(request.body);
@@ -47,4 +44,9 @@ app.get('/api/coins/:id', (req, res) => {
 
 
 */
-module.export = { findCoins }; 
+exports = {
+  findCoins: async function () {
+    const coins = await coinsModel.find({});
+    return coins
+  }
+}; 

@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Amazing Coins and Where they Inhabit</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     <!-- Google fonts-->
@@ -30,16 +31,16 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
-    </ul>
-    </div>
-    </div>
+                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
+                </ul>
+            </div>
+        </div>
     </nav>
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('images/home-bg.jpg')">
+    <header class="masthead" style="background-image: url('assets/images/home-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -56,56 +57,24 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>
+                    <p>
                     <h1>Ask away!</h1>
                     <form action="search">
                         <p><label for="yearc">Year of the coin?</label><br></p>
                         <input type="number" id="yearc" name="yearc"><br>
                         <p><label for="denomc">Denomination of the coin?</label><br></p>
-                        <input type="number" step="0.01" id="denomc" name="denomc">
+                        <input type="number" id="denomc" name="denomc">
                         <p><input type="submit" value="Search" onclick="search(yearc,denomc)"></p>
                     </form>
                     <p><button>Delete</button> <button onclick="save">Save</button></p>
-                    <!--<p id="demo"></p>-->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Year</th>
-                                <th scope="col">Denomination</th>
-                                <th scope="col">Pic</th>
-                                <th scope="col">History</th>
-                                <th scope="col">Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <tr>
-                                  <th scope="row">
-                                    <%= movie._id %>
-                                  </th>
-                                  <td>
-                                    <%= coins.Year %>
-                                  </td>
-                                  <td>
-                                    <%= coins.Denomination %>
-                                  </td>
-                                  <td>
-                                    <%= <img src="coins.Pic" %>
-                                  </td>
-                                  <td>
-                                    <%= coins.History %>
-                                  </td>
-                                  <td>
-                                    <%= coins.Value %>
-                                  </td>
-                                  <%)}%>
-                        </tbody>
+                    <p id="demo"></p>
+                    </p>
                     </table>
                 </div>
             </div>
         </div>
     </article>
-    <script src="js/script.js"> </script>
-
+    <script src="js/script.js"></script>
 </body>
 
 </html>

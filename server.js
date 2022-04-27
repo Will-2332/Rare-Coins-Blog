@@ -4,12 +4,7 @@ const cors = require("cors");
 const path = require("path");
 const ejs = require("ejs");
 const coinHandler = require("./handlers/coinHandler");
-const coinsModel = require("./models/coins");
-
-async function findCoins() {
-    const coins = await coinsModel.find({});
-    return coins
-};
+const db = require("./models");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -26,8 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/images", express.static(__dirname + '/public/images'));
-const db = require("./models");
-const { application } = require("express");
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -58,24 +51,26 @@ db.mongoose.connect(dbURI, {
 app.get('/', async (req, res) => {
     // res.sendFile(path.join(__dirname, '/public/index.html'));
     const data = await findCoins();
-    res.render("index", function (err, str) {
-        async = true
-        console.log(err)
-        res.send(str);
-
-    });
-})
-
-app.get('/about', (req, res) => {
-    res.render("about")
-})
-
-app.get('/login', (req, res) => {
-    res.render("login")
+    console.log(data)
+    ejs.renderFile('./public/table.ejs', {coins:data}, {}, function (err, str) {
+        console.log(err);
+        console.log(str)
+        res.send(str)
+    })
 });
 
+app.get('/HelloWorld', async (req, res) => {
+    try {
+        const data = { user: { name: "CHUPA" } }
+        ejs.renderFile('./public/HelloWorld.ejs', data, {}, function (err, str) {
+            res.send(str)
+        });
+    } catch (err) {
+        console.error(err);
+    }
 
-// set port, listen for requests
+})
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
