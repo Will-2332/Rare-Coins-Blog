@@ -1,12 +1,12 @@
 {
-  "name": "adb-test",
-  "version": "1.0.0",
+  "name": "rare-coins-blog",
+  "version": "1.0.1",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "",
+  "author": "Willz",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,5 +19,14 @@
     "node-fetch": "^3.2.3",
     "parser": "^0.1.4"
   },
-  "description": ""
+  "description": "Blog create for the class of Advanced Databases class, using MongoDB",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Will-2332/Rare-Coins-Blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Will-2332/Rare-Coins-Blog/issues"
+  },
+  "homepage": "https://github.com/Will-2332/Rare-Coins-Blog#readme"
 }
