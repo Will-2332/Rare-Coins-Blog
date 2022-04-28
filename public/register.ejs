@@ -31,7 +31,7 @@
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto py-4 py-lg-0">
+                <ul class="navbar-nav ms-auto py- py-lg-0">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
@@ -40,7 +40,7 @@
         </div>
     </nav>
     <!-- Page Header-->
-    <header class="masthead" style="background-image: url('assets/images/home-bg.jpg')">
+    <header class="masthead" style="background-image: url('images/home-bg.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
@@ -49,6 +49,7 @@
                         <span class="subheading">My personal archive on extraordinary coins!</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </header>
@@ -58,45 +59,37 @@
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <p>
                     <p>
-                    <h1>Look at these!</h1>
-                <table class="table table-striped table-primary" id="coinTable" border="1" > 
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Denomination</th>
-                            <th>Pic</th>
-                            <th>History</th>
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%if (coins.length>0){ %>
-                            <% coins.forEach(function(row){ %>
-                                <tr>
-                                    <td>
-                                        <%= row.Year %>
-                                    </td>
-                                    <td>
-                                        <%= row.Denomination %>
-                                    </td>
-                                    <td>
-                                        <img src="<%= row.Pic%>" alt="Coin" width="250" height="300">
-                                    </td>
-                                    <td>
-                                        <%= row.History %>
-                                    </td>
-                                    <td>
-                                        <%= row.Value %>
-                                    </td>
-                                </tr>
-                                <% })}else{ %>
-                                    <tr>
-                                        <td colspan="6">No Record Found</td>
+                    <h1>Register with us!</h1>
+                    <%- include ('./partials/messages') %>
+                        <form action="/register" method="POST">
+                            <div>
+                                <label for="name">Name</label>
+                                <input type="name" name="name" placeholder="Enter Name"
+                                    value="<%= typeof name != 'undefined' ? name : '' %>" />
 
-                                    </tr>
-                                    <% } %>
-                    </tbody>
-                </table>
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" name="email" placeholder="Enter Email"
+                                    value="<%= typeof email != 'undefined' ? email : '' %>" />
+                            </div>
+                            <div>
+                                <label for="password">Password</label>
+                                <input type="password" name="password" placeholder="Create Password"
+                                    value="<%= typeof password != 'undefined' ? password : '' %>" />
+                            </div>
+                            <div>
+                                <label for="password2">Confirm Password</label>
+                                <input type="password" name="password2" placeholder="Confirm Password"
+                                    value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Register
+                            </button>
+                        </form>
+                        <p>Have An Account? <a href="login">Login</a></p>
+                        </p>
+                </div>
             </div>
         </div>
     </article>

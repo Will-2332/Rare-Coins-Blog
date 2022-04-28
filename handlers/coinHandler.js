@@ -1,7 +1,4 @@
 const coinsModel = require("../models/coins");
-const req
-var coinsUpdate =
-
 
 
   /*    /*app.post("/api/coins", async (request, response) => {
@@ -50,10 +47,10 @@ var coinsUpdate =
     findCoins: async function () {
       const coins = await coinsModel.find({});
       return coins
-    }
+    },
   }
 
-module.exports = {
+/*module.exports = {
   addCoins: async function () {
     const coins = await coinsModel.updateOne({
       { Year: req.Year },
@@ -63,14 +60,16 @@ module.exports = {
       { Value: req.History },
       { status: req.status },
       { upsert: true, useFindAndModify: false },
-      console.log(str)});
-};
+      console.log(str);
+  });
+},
   }
-  /*{
-  $push:
-    { Year: req.body.year }
-   { Denomination: req.body.Denomination }
-   { Pic: req.body.pic }
-   { History: req.body.History }
-   { Value: req.body.History }
+
+/*{
+$push:
+  { Year: req.body.year }
+ { Denomination: req.body.Denomination }
+ { Pic: req.body.pic }
+ { History: req.body.History }
+ { Value: req.body.History }
 });*/
