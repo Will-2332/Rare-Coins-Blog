@@ -13,8 +13,8 @@ const passport = require('passport');
 const app = express();
 const session = require('express-session');
 const flash = require('connect-flash');
-require("./config/passport")(passport)
-
+require("./config/passport").passport(passport);
+const loggedIn = require("./config/passport").loggedIn;
 app.set("view engine", "ejs");
 
 
@@ -106,6 +106,14 @@ app.get('/', async (req, res) => {
     })
 });
 
+app.get('/table', async (req, res) => {
+    const data = await coinHandler.findCoins();
+    ejs.renderFile('./public/table.ejs', { coins: data }, {}, function (err, str) {
+        console.log(err);
+        res.send(str)
+    })
+});
+
 
 
 app.get('/HelloWorld', async (req, res) => {
@@ -158,7 +166,7 @@ app.post('/register', (req, res) => {
 
     //check if password is more than 6 characters
     if (password.length < 6) {
-        errors.push({ msg: 'password atleast 6 characters' })
+        errors.push({ msg: 'password at least 6 characters' })
     }
     if (errors.length > 0) {
         res.render('register', {
@@ -204,17 +212,21 @@ app.post('/register', (req, res) => {
     }
 });
 
-app.post('/login', (req, res, next) => {
+app.post('/login',
     passport.authenticate('local', {
-        successRedirect: '/private/managment',
+        successReturnToOrRedirect: '/managment',
         failureRedirect: '/login',
-        failureFlash: true,
-    })(req, res, next);
-})
+        failureMessage: true
+    }),
+);
 
-app.get('/managment', (req, res) => {
-    ejs.renderFile('.//private/managment.ejs', data, {user : req.user}, function (err, str) {
-         res.send(str) });
+
+app.get('/managment', loggedIn, async (req, res,next) => {
+    const data = await coinHandler.findCoins();
+    ejs.renderFile('./public/managment.ejs', { coins: data }, { user: req.user }, function (err, str) {
+        console.error(err)
+        res.send(str)
+    });
 });
 
 app.get('/register', async (req, res) => {
@@ -227,10 +239,9 @@ app.get('/register', async (req, res) => {
 
 app.get('/logout', async (req, res) => {
     try {
-        const data = {}
-        ejs.renderFile('./public/logout.ejs', data, {}, function (err, str) {
-            res.send(str)
-        });
+        req.logout();
+        req.flash('success_msg', 'Now logged out');
+        res.redirect('/login');
     } catch (err) {
         console.error(err);
     }
