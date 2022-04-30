@@ -74,22 +74,8 @@
       <% coins.forEach(function(row){ %>
         <tr>
           <td>
-            <button id="<%= row._id %>"></button>Click me</button>
-            <script>
-              function test() {
-                alert("The function 'test' is executed");
-                fetch('.coins/' + '<%= row._id %>', {
-                  method: 'DELETE',
-                })
-                  .then(res => res.text()) // or res.json()
-                  .then(res => console.log(res))
-              }
-              let btn = document.getElementById("<%= row._id %>");
-              btn.addEventListener('click', event => {
-                test();
-              });
-            </script>
-
+            <button id="<%= row._id %>" onclick="deletecoin('<%=row._id%>')" class="btn btn-primary btn-block"
+              value="Delete The Coin!" ></button>
           </td>
           <td>
             <%= row.Year %>
@@ -116,5 +102,17 @@
   </tbody>
 </table>
 </div>
+<script>
+  function deletecoin(id) {
+    alert("Coin Deleted!");
+    console.log(id)
+    fetch('coins/' + id, {
+      method: 'DELETE',
+    })
+      .then(res => res.text())
+      .then(res => console.log(res))
+  };
+
+</script>
 
 </html>
