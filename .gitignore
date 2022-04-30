@@ -3288,3 +3288,4 @@ node_modules/pause/Makefile
 node_modules/pause/package.json
 node_modules/pause/Readme.md
 node_modules/.package-lock.json
+.vscode/launch.json

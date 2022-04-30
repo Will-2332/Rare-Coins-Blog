@@ -16,7 +16,7 @@ const flash = require('connect-flash');
 require("./config/passport").passport(passport);
 const loggedIn = require("./config/passport").loggedIn;
 app.set("view engine", "ejs");
-
+const coinsModel = require('./models/coins');
 
 var corsOptions = {
     origin: "http://localhost:8081"
@@ -219,7 +219,16 @@ app.post('/login',
         failureMessage: true
     }),
 );
+app.delete("/coins/:id", async (request, response) => {
+    try {
+      const coins = await coinsModel.findByIdAndDelete(request.params.id);
 
+      if (!coins) response.status(404).send("No item found");
+      response.status(200).send();
+    } catch (error) {
+      response.status(500).send(error);
+    }
+  });
 
 app.get('/managment', loggedIn, async (req, res,next) => {
     const data = await coinHandler.findCoins();
@@ -239,9 +248,9 @@ app.get('/register', async (req, res) => {
 
 app.get('/logout', async (req, res) => {
     try {
-        req.logout();
+        req.logout;
         req.flash('success_msg', 'Now logged out');
-        res.redirect('/login');
+        res.redirect('/users/login');
     } catch (err) {
         console.error(err);
     }

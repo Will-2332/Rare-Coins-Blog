@@ -5,7 +5,6 @@ const User = require("../models/user.model.js")
 
 module.exports = {
     loggedIn: function (req, res, next) {
-        console.log(req);
         if (req.session.passport.user) {
             next();
         } else {
