@@ -229,6 +229,18 @@ app.get('/managment', loggedIn, async (req, res,next) => {
     });
 });
 
+app.get('/newcoin', async (req, res) => {
+    try {
+        const data = {}
+        ejs.renderFile('./public/newcoin.ejs', data, {}, function (err, str) {
+            res.send(str)
+        });
+    } catch (err) {
+        console.error(err);
+    }
+
+})
+
 app.get("/coins", async (request, response) => {
     const coins = await coinsModel.find({});
   
@@ -291,7 +303,7 @@ app.get('/logout', async (req, res) => {
     try {
         req.logout;
         req.flash('success_msg', 'Now logged out');
-        res.redirect('/users/login');
+        res.redirect('/login');
     } catch (err) {
         console.error(err);
     }
