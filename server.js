@@ -8,8 +8,13 @@ const db = require("./models/index.js");
 require('dotenv/config');
 const router = express.Router();
 const User = require("./models/user.model.js")
-
+const bcrypt = require('bcrypt')
+const passport = require('passport');
 const app = express();
+const session = require('express-session');
+const flash = require('connect-flash');
+require("./config/passport")(passport)
+
 app.set("view engine", "ejs");
 
 
@@ -22,6 +27,19 @@ app.use(express.static(__dirname + '/public'));
 app.set("views", path.join(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+//use flash
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    next();
+})
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/images", express.static(__dirname + '/public/images'));
@@ -79,9 +97,6 @@ db.mongoose.connect(dbURI, {
     });
 
 
-
-
-
 app.get('/', async (req, res) => {
     // res.sendFile(path.join(__dirname, '/public/index.html'));
     const data = await coinHandler.findCoins();
@@ -129,7 +144,7 @@ app.get('/Login', async (req, res, next) => {
 
 })
 
-router.post('/register', (req, res) => {
+app.post('/register', (req, res) => {
     const { name, email, password, password2 } = req.body;
     let errors = [];
     console.log(' Name ' + name + ' email :' + email + ' pass:' + password);
@@ -154,23 +169,53 @@ router.post('/register', (req, res) => {
             password2: password2
         })
     } else {
-        bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) throw err;
-                //save user
-                newUser.save()
-                    .then((value) => {
-                        console.log(value)
-                        res.redirect('/login');
-                    })
-                    .catch(value => { console.log(value) })
-            })
+        //validation passed
+        User.findOne({ email: email }).exec((err, user) => {
+            console.log(user);
+            if (user) {
+                errors.push({ msg: 'email already registered' });
+                res.render('register', { errors, name, email, password, password2 })
+            } else {
+                const newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password
+                });
+
+                //hash password
+                bcrypt.genSalt(10, (err, salt) =>
+                    bcrypt.hash(newUser.password, salt,
+                        (err, hash) => {
+                            if (err) throw err;
+                            //save pass to hash
+                            newUser.password = hash;
+                            //save user
+                            newUser.save()
+                                .then((value) => {
+                                    console.log(value)
+                                    req.flash('success_msg', 'You have now registered!')
+                                    res.redirect('/login');
+                                })
+                                .catch(value => console.log(value));
+
+                        }));
+            }
         })
     }
 });
 
-router.post('/login', (req, res, next) => {
+app.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/private/managment',
+        failureRedirect: '/login',
+        failureFlash: true,
+    })(req, res, next);
 })
+
+app.get('/managment', (req, res) => {
+    ejs.renderFile('.//private/managment.ejs', data, {user : req.user}, function (err, str) {
+         res.send(str) });
+});
 
 app.get('/register', async (req, res) => {
 

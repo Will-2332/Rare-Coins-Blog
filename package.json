@@ -17,10 +17,11 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "node-fetch": "^3.2.3",
-    "parser": "^0.1.4"
+    "parser": "^0.1.4",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
   },
   "description": "Blog create for the class of Advanced Databases class, using MongoDB",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Will-2332/Rare-Coins-Blog.git"
