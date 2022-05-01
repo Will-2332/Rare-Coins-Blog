@@ -1,4 +1,4 @@
-const db = require("../models/index.js");
+/*const db = require("../models/index.js");
 const ROLES = db.ROLES;
 const User = db.user;
 
@@ -57,3 +57,4 @@ const verifySignUp = {
 };
 
 module.exports = verifySignUp;
+*/

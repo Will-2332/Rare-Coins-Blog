@@ -251,17 +251,6 @@ app.get("/coins", loggedIn, async (request, response) => {
     }
 });
 
-// app.post("/coins", async (request, response) => {
-//     const coins = new coinsModel(request.body);
-
-//     try {
-//         await coins.save();
-//         console.log(coins);
-//         response.send(coins);
-//     } catch (error) {
-//         response.status(500).send(error);
-//     }
-// });
 
 app.post('/coins',loggedIn, (req, res) => {
     const { Year, Denomination, Pic, History, Value } = req.body;
