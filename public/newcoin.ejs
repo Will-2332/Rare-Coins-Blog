@@ -60,28 +60,28 @@
     <div>
         <label for="Year">Year of coin emission</label>
         <input type="date" name="Year" placeholder="Enter the year when the coin was coined!"
-            value="<%= typeof name != 'undefined' ? name : '' %>" />
+            value="<%= typeof Year != 'undefined' ? Year : '' %>" />
 
     </div>
     <div>
         <label for="Denomination">Denomination(how much it should value)</label>
         <input step="0.1" type="number" name="Denomination" placeholder="Enter what is the number on the coin"
-            value="<%= typeof email != 'undefined' ? email : '' %>" />
+            value="<%= typeof Denomination != 'undefined' ? Denomination : '' %>" />
     </div>
     <div>
         <label for="Pic">Pictre of the coin!</label>
         <input type="string" name="Pic" placeholder="A link will be perfect :)"
-            value="<%= typeof password != 'undefined' ? password : '' %>" />
+            value="<%= typeof Pic != 'undefined' ? Pic : '' %>" />
     </div>
     <div>
         <label for="History">Tell us about this special coin!</label>
         <input type="string" name="History" placeholder="Please pretty please?"
-            value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+            value="<%= typeof History != 'undefined' ? History : '' %>" />
     </div>
     <div>
         <label for="Value">Value of the coin now a days</label>
         <input type="number" name="Value" placeholder="Maybe it's worth a bit more ?"
-            value="<%= typeof name != 'undefined' ? name : '' %>" />
+            value="<%= typeof Value != 'undefined' ? Value : '' %>" />
 
     </div>
     <button onClick="window.location.href=window.location.href" type="submit" class="btn btn-primary btn-block" >
