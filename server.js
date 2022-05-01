@@ -221,7 +221,7 @@ app.post('/login',
 );
 
 
-app.get('/managment', loggedIn, async (req, res,next) => {
+app.get('/managment', loggedIn, async (req, res, next) => {
     const data = await coinHandler.findCoins();
     ejs.renderFile('./public/managment.ejs', { coins: data }, { user: req.user }, function (err, str) {
         console.error(err)
@@ -229,7 +229,7 @@ app.get('/managment', loggedIn, async (req, res,next) => {
     });
 });
 
-app.get('/newcoin', async (req, res) => {
+app.get('/newcoin', /*loggedIn,*/ async (req, res) => {
     try {
         const data = {}
         ejs.renderFile('./public/newcoin.ejs', data, {}, function (err, str) {
@@ -237,59 +237,62 @@ app.get('/newcoin', async (req, res) => {
         });
     } catch (err) {
         console.error(err);
-    }
+    };
 
 })
 
 app.get("/coins", async (request, response) => {
     const coins = await coinsModel.find({});
-  
+
     try {
-      response.send(coins);
-    } catch (error) {
-      response.status(500).send(error);
-    }
-  });
-  
-  app.post("/coins", async (request, response) => {
-      const coins = new coinsModel(request.body);
-    
-      try {
-        await coins.save();
         response.send(coins);
-      } catch (error) {
+    } catch (error) {
         response.status(500).send(error);
-      }
-    });
-  
-    app.patch("/coins/:id", async (request, response) => {
-      try {
+    }
+});
+
+app.post("/coins", async (request, response) => {
+    const coins = new coinsModel(request.body);
+
+    try {
+        await coins.save();
+        console.log(coins);
+        response.send(coins);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+});
+
+
+app.patch("/coins/:id", async (request, response) => {
+    try {
         await coinsModel.findByIdAndUpdate(request.params.id, request.body);
         await coinsModel.save();
+        console.log(request.params.id);
         response.send(coin);
-      } catch (error) {
+    } catch (error) {
         response.status(500).send(error);
-      }
-    });
-  
-    app.delete("/coins/:id", async (request, response) => {
-      try {
+    }
+});
+
+app.delete("/coins/:id", async (request, response) => {
+    try {
         const coins = await coinsModel.findByIdAndDelete(request.params.id);
-    
+
         if (!coins) response.status(404).send("No item found");
         response.status(200).send();
-      } catch (error) {
+    } catch (error) {
         response.status(500).send(error);
-      }
-    });
-  
-    app.get('/coins/:id', (req, res) => {
-      Coins.find({}, function(err, coins) {
-          res.render('index.html', {
-              CoinsList: coins
-          })
-      })
-  })
+    }
+});
+
+app.get('/coins/:id', (req, res) => {
+    Coins.find({}, function (err, coins) {
+        res.render('index.html', {
+            CoinsList: coins
+        })
+    })
+})
 
 app.get('/register', async (req, res) => {
 

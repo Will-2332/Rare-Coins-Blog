@@ -34,7 +34,6 @@
         <ul class="navbar-nav ms-auto py- py-lg-0">
           <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
-          <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/newcoin">Add a Coin</a></li>
           <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
 
@@ -104,7 +103,7 @@
 </div>
 <script>
   function deletecoin(id) {
-    alert("Coin Deleted!");
+    alert("Refresh the page!");
     console.log(id)
     fetch('coins/' + id, {
       method: 'DELETE',

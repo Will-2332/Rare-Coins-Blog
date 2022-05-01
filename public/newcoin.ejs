@@ -34,7 +34,7 @@
                 <ul class="navbar-nav ms-auto py- py-lg-0">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/managment">Managment</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
                 </ul>
             </div>
@@ -56,6 +56,38 @@
     <script src="js/script.js"></script>
 </body>
 <p> Welcome </p>
+<form action="/coins" method="POST">
+    <div>
+        <label for="Year">Year of coin emission</label>
+        <input type="date" name="Year" placeholder="Enter the year when the coin was coined!"
+            value="<%= typeof name != 'undefined' ? name : '' %>" />
+
+    </div>
+    <div>
+        <label for="Denomination">Denomination(how much it should value)</label>
+        <input step="0.1" type="number" name="Denomination" placeholder="Enter what is the number on the coin"
+            value="<%= typeof email != 'undefined' ? email : '' %>" />
+    </div>
+    <div>
+        <label for="Pic">Pictre of the coin!</label>
+        <input type="string" name="Pic" placeholder="A link will be perfect :)"
+            value="<%= typeof password != 'undefined' ? password : '' %>" />
+    </div>
+    <div>
+        <label for="History">Tell us about this special coin!</label>
+        <input type="string" name="History" placeholder="Please pretty please?"
+            value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+    </div>
+    <div>
+        <label for="Value">Value of the coin now a days</label>
+        <input type="number" name="Value" placeholder="Maybe it's worth a bit more ?"
+            value="<%= typeof name != 'undefined' ? name : '' %>" />
+
+    </div>
+    <button onClick="window.location.href=window.location.href" type="submit" class="btn btn-primary btn-block" >
+        Register
+    </button>
+</form>
 </div>
 
 </html>
