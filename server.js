@@ -229,7 +229,7 @@ app.get('/managment', loggedIn, async (req, res, next) => {
     });
 });
 
-app.get('/newcoin', loggedIn, async (req, res) => {
+app.get('/newcoin', /*loggedIn,*/ async (req, res) => {
     try {
         const data = {}
         ejs.renderFile('./public/newcoin.ejs', data, {}, function (err, str) {
@@ -241,7 +241,7 @@ app.get('/newcoin', loggedIn, async (req, res) => {
 
 })
 
-app.get("/coins", loggedIn, async (request, response) => {
+app.get("/coins", async (request, response) => {
     const coins = await coinsModel.find({});
 
     try {
@@ -251,6 +251,7 @@ app.get("/coins", loggedIn, async (request, response) => {
     }
 });
 
+<<<<<<< HEAD
 
 app.post('/coins',loggedIn, (req, res) => {
     const { Year, Denomination, Pic, History, Value } = req.body;
@@ -271,7 +272,20 @@ app.post('/coins',loggedIn, (req, res) => {
             req.flash('New coin saved!')
             res.redirect('/newcoin');
         })
+=======
+app.post("/coins", async (request, response) => {
+    const coins = new coinsModel(request.body);
+
+    try {
+        await coins.save();
+        console.log(coins);
+        response.send(coins);
+    } catch (error) {
+        response.status(500).send(error);
+    }
+>>>>>>> parent of bd38fef (ok, upsert coins working like a charm!)
 });
+
 
 app.patch("/coins/:id", async (request, response) => {
     try {
@@ -284,7 +298,7 @@ app.patch("/coins/:id", async (request, response) => {
     }
 });
 
-app.delete("/coins/:id", loggedIn, async (request, response) => {
+app.delete("/coins/:id", async (request, response) => {
     try {
         const coins = await coinsModel.findByIdAndDelete(request.params.id);
 
