@@ -229,7 +229,7 @@ app.get('/managment', loggedIn, async (req, res, next) => {
     });
 });
 
-app.get('/newcoin', /*loggedIn,*/ async (req, res) => {
+app.get('/newcoin', loggedIn, async (req, res) => {
     try {
         const data = {}
         ejs.renderFile('./public/newcoin.ejs', data, {}, function (err, str) {
@@ -251,7 +251,6 @@ app.get("/coins", async (request, response) => {
     }
 });
 
-<<<<<<< HEAD
 
 app.post('/coins',loggedIn, (req, res) => {
     const { Year, Denomination, Pic, History, Value } = req.body;
@@ -272,18 +271,6 @@ app.post('/coins',loggedIn, (req, res) => {
             req.flash('New coin saved!')
             res.redirect('/newcoin');
         })
-=======
-app.post("/coins", async (request, response) => {
-    const coins = new coinsModel(request.body);
-
-    try {
-        await coins.save();
-        console.log(coins);
-        response.send(coins);
-    } catch (error) {
-        response.status(500).send(error);
-    }
->>>>>>> parent of bd38fef (ok, upsert coins working like a charm!)
 });
 
 
@@ -337,6 +324,6 @@ app.get('/logout', async (req, res) => {
 })
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app. listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });   
