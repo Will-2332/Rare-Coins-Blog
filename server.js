@@ -99,7 +99,6 @@ db.mongoose.connect(dbURI, {
 
 
 app.get('/', async (req, res) => {
-    // res.sendFile(path.join(__dirname, '/public/index.html'));
     const data = await coinHandler.findCoins();
     ejs.renderFile('./public/index.ejs', { coins: data }, {}, function (err, str) {
         console.log(err);
