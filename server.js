@@ -54,6 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //mongoDB connection URI, remember to change 'password' with your password and myFirstDatabase with your database name
 const dbURI = process.env.DB_ACESS;
+console.log(dbURI)
 
 //using mongoose to connect to MongoDB, the last two option to avoid deprecation warnings.
 db.mongoose.connect(dbURI, {
@@ -350,6 +351,7 @@ app.get('/logout', async (req, res) => {
 })
 
 const PORT = process.env.PORT || process.env.PORT_ACESS;
+console.log(PORT)
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });   
