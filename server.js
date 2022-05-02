@@ -5,7 +5,6 @@ const path = require("path");
 const ejs = require("ejs");
 const coinHandler = require("./handlers/coinHandler");
 const db = require("./models/index.js");
-require('dotenv/config');
 const router = express.Router();
 const User = require("./models/user.model.js")
 const bcrypt = require('bcrypt')
