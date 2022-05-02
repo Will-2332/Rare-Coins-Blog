@@ -3,6 +3,4 @@ node_modules/
 .vscode/
 .env/
 nbproject/
-package-lock.json
 .env
-node_modules/.package-lock.json
