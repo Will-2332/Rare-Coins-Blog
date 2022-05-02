@@ -344,6 +344,7 @@ app.get('/logout', async (req, res) => {
     try {
         req.logout;
         req.flash('success_msg', 'Now logged out');
+        console.log('it worked')
         res.redirect('/login');
     } catch (err) {
         console.error(err);
