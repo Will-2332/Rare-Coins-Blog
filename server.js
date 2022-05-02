@@ -155,20 +155,23 @@ app.get('/Login', async (req, res, next) => {
 app.post('/register', (req, res) => {
     const { name, email, password, password2 } = req.body;
     let errors = [];
-    console.log(' Name ' + name + ' email :' + email + ' pass:' + password);
+    console.log(' Name ' + name + ' email :' + email + ' pass:' + password, 'up to here works!');
     if (!name || !email || !password || !password2) {
         errors.push({ msg: "Please fill in all fields" })
     }
     //check if match
     if (password !== password2) {
+        console.log('different passwords')
         errors.push({ msg: "passwords dont match" });
     }
 
     //check if password is more than 6 characters
     if (password.length < 6) {
+        console.log('small passworrds')
         errors.push({ msg: 'password at least 6 characters' })
     }
     if (errors.length > 0) {
+        console.log('we got here')
         res.render('register', {
             errors: errors,
             name: name,
@@ -184,6 +187,7 @@ app.post('/register', (req, res) => {
                 errors.push({ msg: 'email already registered' });
                 res.render('register', { errors, name, email, password, password2 })
             } else {
+                console.log('good')
                 const newUser = new User({
                     name: name,
                     email: email,
@@ -200,7 +204,7 @@ app.post('/register', (req, res) => {
                             //save user
                             newUser.save()
                                 .then((value) => {
-                                    console.log(value)
+                                    console.log(value, 'it worked!')
                                     req.flash('success_msg', 'You have now registered!')
                                     res.redirect('/login');
                                 })
@@ -241,6 +245,24 @@ app.get('/newcoin', loggedIn, async (req, res) => {
 
 })
 
+app.get('/editcoin/(:id)', function (req, res, next) {
+
+    coinsModel.findById(req.params.id, (err, doc) => {
+        if (!err) {
+            res.render("editcoin", {
+                title: "Update A coin!",
+                data: doc
+            });
+        } else {
+            req.flash('error', 'Coin not found with id = ' + req.params.id)
+            res.redirect('/managment')
+        }
+    });
+
+
+
+})
+
 app.get("/coins", async (request, response) => {
     const coins = await coinsModel.find({});
 
@@ -251,8 +273,31 @@ app.get("/coins", async (request, response) => {
     }
 });
 
+app.post('/editcoin/:id', function (req, res, next) {
+    const { Year, Denomination, Pic, History, Value } = req.body;
+    console.log(' Year: ' + Year +
+        'Denomination :' + Denomination +
+        'Pic:' + Pic +
+        'History' + History +
+        'Value' + Value);
+    coinsModel.findByIdAndUpdate(req.body.id,
+        { Year: req.body.name },
+        { Denominaiton: req.body.Denominaiton },
+        { Pic: req.body.Pic },
+        { History: req.body.History },
+        { Value: req.body.Value },
+        function (err, data) {
+            if (err) {
+                req.flash('error!');
+                res.render('/managment');
+            } else {
+                req.flash('updated');
+                res, redirect('/managment');
+            }
+        });
+});
 
-app.post('/coins',loggedIn, (req, res) => {
+app.post('/coins', loggedIn, (req, res) => {
     const { Year, Denomination, Pic, History, Value } = req.body;
     console.log(' Year: ' + Year +
         ' Denomination :' + Denomination +
@@ -296,13 +341,6 @@ app.delete("/coins/:id", async (request, response) => {
     }
 });
 
-app.get('/coins/:id', (req, res) => {
-    Coins.find({}, function (err, coins) {
-        res.render('index.html', {
-            CoinsList: coins
-        })
-    })
-})
 
 app.get('/register', async (req, res) => {
 
@@ -324,6 +362,6 @@ app.get('/logout', async (req, res) => {
 })
 
 const PORT = process.env.PORT || 3000;
-app. listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });   

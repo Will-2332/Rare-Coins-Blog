@@ -18,6 +18,7 @@
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" type="text/css" href="css/styles.css">
+
 </head>
 
 <body>
@@ -34,7 +35,7 @@
                 <ul class="navbar-nav ms-auto py- py-lg-0">
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Home</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/about">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/managment">Managment</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Logout</a></li>
                 </ul>
             </div>
@@ -56,6 +57,31 @@
     <script src="js/script.js"></script>
 </body>
 <p> Welcome </p>
-</div>
+<form action="/editcoin/<%= data._id %>" method="post" name="form1">
+    <div class="form-group">
+        <label for="Year">Year</label>
+        <input type="date" class="form-control" Year="Year" id="Year" value="<%= data.Year %>" placeholder="Name">
+    </div>
+    <div class="form-group">
+        <label for="Denomination">Denomination</label>
+        <input step="0.1" type="number" class="form-control" Denomination="Denomination" id="Denomination"
+            aria-describedby="emailHelp" placeholder="Denomination" value="<%= data.Denomination %>">
+    </div>
+    <div class="form-group">
+        <label for="Pic">Pic</label>
+        <input type="string" class="form-control" Pic="Pic" id="Pic" placeholder="Pic" value="<%= data.Pic %>">
+    </div>
+    <div class="form-group">
+        <label for="History">History</label>
+        <input type="string" class="form-control" History="History" id="History" placeholder="History"
+            value="<%= data.History %>">
+    </div>
+    <div class="form-group">
+        <label for="Value">Value</label>
+        <input type="number" class="form-control" Value="Value" id="Value" placeholder="Value"
+            value="<%= data.Value %>">
+    </div>
+    <button type="submit" class="btn btn-info">Update</button>
+</form>
 
 </html>

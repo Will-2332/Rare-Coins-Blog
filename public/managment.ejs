@@ -61,6 +61,7 @@
   <thead>
     <tr>
       <th>Delete?</th>
+      <th>Edit!</th>
       <th>Year</th>
       <th>Denomination</th>
       <th>Pic</th>
@@ -74,7 +75,9 @@
         <tr>
           <td>
             <button id="<%= row._id %>" onclick="deletecoin('<%=row._id%>')" class="btn btn-primary btn-block"
-              value="Delete The Coin!" ></button>
+              value="Delete The Coin!"></button>
+          </td>
+          <td><a  class="btn btn-primary btn-block" href="/editcoin/<%= row._id%>" value="Edit The Coin!"></a>
           </td>
           <td>
             <%= row.Year %>
