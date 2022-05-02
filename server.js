@@ -43,6 +43,7 @@ app.use((req, res, next) => {
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/images", express.static(__dirname + '/public/images'));
+app.use('/public', express.static(__dirname + '/public'))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -245,7 +246,7 @@ app.get('/newcoin', loggedIn, async (req, res) => {
 
 })
 
-app.get('/editcoin/(:id)', function (req, res, next) {
+app.get('/editcoin/(:id)', loggedIn, function (req, res, next) {
 
     coinsModel.findById(req.params.id, (err, doc) => {
         if (!err) {
@@ -273,26 +274,24 @@ app.get("/coins", async (request, response) => {
     }
 });
 
-app.post('/editcoin/:id', function (req, res, next) {
+app.post('/editcoin/:id', loggedIn, function (req, res) {
     const { Year, Denomination, Pic, History, Value } = req.body;
     console.log(' Year: ' + Year +
         'Denomination :' + Denomination +
         'Pic:' + Pic +
         'History' + History +
         'Value' + Value);
-    coinsModel.findByIdAndUpdate(req.body.id,
-        { Year: req.body.name },
-        { Denominaiton: req.body.Denominaiton },
-        { Pic: req.body.Pic },
-        { History: req.body.History },
-        { Value: req.body.Value },
-        function (err, data) {
+    const editcoin = req.body;
+    coinsModel.findByIdAndUpdate(req.params.id, editcoin,
+        function (err, result) {
+            console.log(req.params.id)
             if (err) {
                 req.flash('error!');
                 res.render('/managment');
             } else {
+                console.log('sucess')
                 req.flash('updated');
-                res, redirect('/managment');
+                res.redirect('/managment');
             }
         });
 });
@@ -319,18 +318,8 @@ app.post('/coins', loggedIn, (req, res) => {
 });
 
 
-app.patch("/coins/:id", async (request, response) => {
-    try {
-        await coinsModel.findByIdAndUpdate(request.params.id, request.body);
-        await coinsModel.save();
-        console.log(request.params.id);
-        response.send(coin);
-    } catch (error) {
-        response.status(500).send(error);
-    }
-});
 
-app.delete("/coins/:id", async (request, response) => {
+app.delete("/coins/:id", loggedIn, async (request, response) => {
     try {
         const coins = await coinsModel.findByIdAndDelete(request.params.id);
 

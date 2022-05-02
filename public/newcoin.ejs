@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
         rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/styles.css">
 </head>
 
 <body>
@@ -59,29 +59,24 @@
 <form action="/coins" method="POST">
     <div>
         <label for="Year">Year of coin emission</label>
-        <input type="date" name="Year" placeholder="Enter the year when the coin was coined!"
-            value="<%= typeof name != 'undefined' ? name : '' %>" />
+        <input type="date" name="Year" placeholder="Enter the year when the coin was coined!"/>
 
     </div>
     <div>
         <label for="Denomination">Denomination(how much it should value)</label>
-        <input step="0.1" type="number" name="Denomination" placeholder="Enter what is the number on the coin"
-            value="<%= typeof email != 'undefined' ? email : '' %>" />
+        <input step="0.1" type="number" name="Denomination" placeholder="Enter what is the number on the coin"/>
     </div>
     <div>
         <label for="Pic">Pictre of the coin!</label>
-        <input type="string" name="Pic" placeholder="A link will be perfect :)"
-            value="<%= typeof password != 'undefined' ? password : '' %>" />
+        <input type="string" name="Pic" placeholder="A link will be perfect :)"/>
     </div>
     <div>
         <label for="History">Tell us about this special coin!</label>
-        <input type="string" name="History" placeholder="Please pretty please?"
-            value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+        <input type="string" name="History" placeholder="Please pretty please?"/>
     </div>
     <div>
         <label for="Value">Value of the coin now a days</label>
-        <input type="number" name="Value" placeholder="Maybe it's worth a bit more ?"
-            value="<%= typeof name != 'undefined' ? name : '' %>" />
+        <input type="number" name="Value" placeholder="Maybe it's worth a bit more ?"/>
 
     </div>
     <button onClick="window.location.href=window.location.href" type="submit" class="btn btn-primary btn-block" >
@@ -90,4 +85,5 @@
 </form>
 </div>
 </body>
+<script src='js/bootstrap.bundle.min.js'></script>
 </html>
