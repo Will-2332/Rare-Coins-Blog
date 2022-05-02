@@ -44,6 +44,7 @@ app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/images", express.static(__dirname + '/public/images'));
 app.use('/public', express.static(__dirname + '/public'))
+app.use('favicon.ico', express.static(__dirname + '/favicon.ico'));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -350,8 +351,8 @@ app.get('/logout', async (req, res) => {
 
 })
 
-const PORT = process.env.PORT || process.env.PORT_ACESS;
-console.log(PORT)
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+const _PORT = process.env.PORT_ACESS;
+console.log(_PORT)
+app.listen(process.env.PORT || _PORT, () => {
+    console.log(`Server is running on port ${_PORT}.`);
 });   
