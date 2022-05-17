@@ -122,8 +122,71 @@ app.get('/editcoin/(:id)', loggedIn, function (req, res, next) {
 
 ![Edit page](README_images/edit.jpg)
 
+### The new coin page.
 
+* This page was created with the intention of allow the user to insert new items on the coin table and have them displayed to the general public.
+* Here the user will insert the items I believe are important for this project.
+* The items year and denomination are the minimum requirements.
+* Pictures, the history and the value of the coin are not requirements.
+* This page works by sending a form to a function that upserts it to the model and save it.
 
+##### Html code:
+
+```
+<form action="/coins" method="POST">
+    <div>
+        <label for="Year">Year of coin emission</label>
+        <input type="date" name="Year" placeholder="Enter the year when the coin was coined!"/>
+
+    </div>
+    <div>
+        <label for="Denomination">Denomination(how much it should value)</label>
+        <input step="0.1" type="number" name="Denomination" placeholder="Enter what is the number on the coin"/>
+    </div>
+    <div>
+        <label for="Pic">Pictre of the coin!</label>
+        <input type="string" name="Pic" placeholder="A link will be perfect :)"/>
+    </div>
+    <div>
+        <label for="History">Tell us about this special coin!</label>
+        <input type="string" name="History" placeholder="Please pretty please?"/>
+    </div>
+    <div>
+        <label for="Value">Value of the coin now a days</label>
+        <input type="number" name="Value" placeholder="Maybe it's worth a bit more ?"/>
+
+    </div>
+    <button onClick="window.location.href=window.location.href" type="submit" class="btn btn-primary btn-block" >
+        Register
+    </button>
+    ```
+
+#####    JavaScript code:
+
+```
+app.post('/coins', loggedIn, (req, res) => {
+    const { Year, Denomination, Pic, History, Value } = req.body;
+    console.log(' Year: ' + Year +
+        ' Denomination :' + Denomination +
+        ' Pic:' + Pic +
+        'History' + History +
+        'Value' + Value);
+    const newCoin = new coinsModel({
+        Year: Year,
+        Denominaiton: Denomination,
+        Pic: Pic,
+        History: History,
+        Value: Value
+    });
+    newCoin.save()
+        .then((value) => {
+            req.flash('New coin saved!')
+            res.redirect('/newcoin');
+        })
+});
+```
+
+![New coin page](README_images/newcoin.jpg)
 
 
 
