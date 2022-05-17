@@ -274,7 +274,7 @@ app.get('/logout', async (req, res) => {
 ```
 ### The database
 * For this project, I used mongoDB hosted on the Atlas platform, for easy of use.
-* The user should insert it's own credentials to the Atlas platform.
+* The user should insert it's own credentials to the Atlas platformm this can be done in the ``.env`` file.
 * The mongoose module was used because it has a vast amount of documentation and tutorials on the internet, which allowed me to more easily to develop my project.
 #### The coin Document :
 * The coin document is the one holding the information for the website.
@@ -340,8 +340,10 @@ const User = mongoose.model(
 * On this one, I've decided to make the security and requirements while creating the new user instead of doing it while creating the document, this leads us to a very simple model.
 
 ### Initialization
+* If being run locally, the user should insert the port which he intend to use on the **``.env``** file.
 * The project should work automatically once the command ```npm install``` and ```npm start``` are given, all the modules should be installed automatically and ready to go.
 * In the scenario of it not running, all the package used are in this ready and on the **package.json**
+
 
 
 
