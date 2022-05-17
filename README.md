@@ -44,7 +44,73 @@ To display the database I used simple function to find all the coins on the data
 
 ### The register page
 * As mentioned before, the [register page](http://coins-blog-mongo-uni.herokuapp.com/register) can be reached from the login screen, here the user can insert their name, email and a password.
-* By doing so, a new item will be created in the user table, this will contain name, email and password, in regards to the password, I took two measures to insure security, one is to make as a requirement for the password to have over 6 digits and second is that the password is hashed when saved at the database, so in case a breach of security, the password is not compromised. 
+* By doing so, a new item will be created in the user table, this will contain name, email and password, in regards to the password, I took two measures to insure security, one is to make as a requirement for the password to have over 6 digits and second is that the password is hashed when saved at the database, so in case a breach of security, the password is not compromised.
+```
+app.post('/register', (req, res) => {
+    const { name, email, password, password2 } = req.body;
+    let errors = [];
+    console.log(' Name ' + name + ' email :' + email + ' pass:' + password, 'up to here works!');
+    if (!name || !email || !password || !password2) {
+        errors.push({ msg: "Please fill in all fields" })
+    }
+    //check if match
+    if (password !== password2) {
+        console.log('different passwords')
+        errors.push({ msg: "passwords dont match" });
+    }
+
+    //check if password is more than 6 characters
+    if (password.length < 6) {
+        console.log('small passworrds')
+        errors.push({ msg: 'password at least 6 characters' })
+    }
+    if (errors.length > 0) {
+        console.log('we got here')
+        res.render('register', {
+            errors: errors,
+            name: name,
+            email: email,
+            password: password,
+            password2: password2
+        })
+    } else {
+        //validation passed
+        User.findOne({ email: email }).exec((err, user) => {
+            console.log(user);
+            if (user) {
+                errors.push({ msg: 'email already registered' });
+                res.render('register', { errors, name, email, password, password2 })
+            } else {
+                console.log('good')
+                const newUser = new User({
+                    name: name,
+                    email: email,
+                    password: password
+                });
+
+                //hash password
+                bcrypt.genSalt(10, (err, salt) =>
+                    bcrypt.hash(newUser.password, salt,
+                        (err, hash) => {
+                            if (err) throw err;
+                            //save pass to hash
+                            newUser.password = hash;
+                            //save user
+                            newUser.save()
+                                .then((value) => {
+                                    console.log(value, 'it worked!')
+                                    req.flash('success_msg', 'You have now registered!')
+                                    res.redirect('/login');
+                                })
+                                .catch(value => console.log(value));
+
+                        }));
+            }
+        })
+    }
+});
+```
+
 * At the bottom of the page there's a link leading the user back to the login page in case he clicked by mistake on the register button.
 ![Register page](README_images/register.jpg)
 
@@ -159,11 +225,13 @@ app.get('/editcoin/(:id)', loggedIn, function (req, res, next) {
     <button onClick="window.location.href=window.location.href" type="submit" class="btn btn-primary btn-block" >
         Register
     </button>
-    ```
-
+    
+    
+  ```
+    
 #####    JavaScript code:
-
 ```
+
 app.post('/coins', loggedIn, (req, res) => {
     const { Year, Denomination, Pic, History, Value } = req.body;
     console.log(' Year: ' + Year +
@@ -187,6 +255,94 @@ app.post('/coins', loggedIn, (req, res) => {
 ```
 
 ![New coin page](README_images/newcoin.jpg)
+
+
+### The logout page.
+* the logout page itself does not exist, the link only calls a function that destroys the session and redirect the user to the login page again.
+```
+app.get('/logout', async (req, res) => {
+    try {
+        req.logout;
+        req.flash('success_msg', 'Now logged out');
+        console.log('it worked')
+        res.redirect('/login');
+    } catch (err) {
+        console.error(err);
+    }
+
+})
+```
+### The database
+* For this project, I used mongoDB hosted on the Atlas platform, for easy of use.
+* The user should insert it's own credentials to the Atlas platform.
+* The mongoose module was used because it has a vast amount of documentation and tutorials on the internet, which allowed me to more easily to develop my project.
+#### The coin Document :
+* The coin document is the one holding the information for the website.
+* The model is created automatically by the server once it's running.
+``` 
+const CoinsSchema = new mongoose.Schema({
+    Year: {
+        type: Date,
+        default: 0,
+        required: true,
+        validate(value) {
+            if (value < 0) throw new Error("Coins were mande at a point in time!");
+        },
+    },
+    Denomination: {
+        type: Number,
+        default: 0.1,
+        required: true,
+        validate(value) {
+            if (value < 0) throw new Error("Coins always should have a denomination");
+        },
+    },
+    Pic: {
+        type: String,
+        required: false,
+        trim: false,
+        lowercase: false,
+    },
+    History: {
+        type: String,
+        required: false,
+        trim: false,
+        lowercase: false,
+    },
+    Value: {
+        type: Number,
+        default: 0,
+        required: false,
+    },
+});
+
+```
+* It can be seen in the code as mentioned before that Date and Year are requirements for the model.
+
+#### The User Document : 
+* On this document all the information about the registered user is being held.
+```
+const User = mongoose.model(
+    "User",
+    new mongoose.Schema({
+        name:String,
+        email: String,
+        password: String,
+        roles: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Role"
+            }
+        ]
+    })
+);
+```
+* On this one, I've decided to make the security and requirements while creating the new user instead of doing it while creating the document, this leads us to a very simple model.
+
+### Initialization
+* The project should work automatically once the command ```npm install``` and ```npm start``` are given, all the modules should be installed automatically and ready to go.
+* In the scenario of it not running, all the package used are in this ready and on the **package.json**
+
 
 
 
