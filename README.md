@@ -319,6 +319,9 @@ const CoinsSchema = new mongoose.Schema({
 ```
 * It can be seen in the code as mentioned before that Date and Year are requirements for the model.
 
+
+![](README_images/CompassCoins.jpg)
+
 #### The User Document : 
 * On this document all the information about the registered user is being held.
 ```
@@ -338,6 +341,9 @@ const User = mongoose.model(
 );
 ```
 * On this one, I've decided to make the security and requirements while creating the new user instead of doing it while creating the document, this leads us to a very simple model.
+
+
+![](README_images/CompassUsers.jpg)
 
 ### Initialization
 * If being run locally, the user should insert the port which he intend to use on the **``.env``** file.
